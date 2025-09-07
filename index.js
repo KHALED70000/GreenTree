@@ -2,10 +2,28 @@ function MainFunction() {
     let AllcataURL = "https://openapi.programming-hero.com/api/categories"
 
 
-     window.selectAll = (id, e) => {
+    window.selectAll = (e) => {
+        // let buttons = document.querySelectorAll("#cataContainer li");
+        // buttons.forEach(btn => {
 
-        
 
+        //     if (btn.classList.contains("bg-[#15803D]") && btn.classList.contains("text-white")) {
+        //         btn.classList.remove("bg-[#15803D]", "text-white");
+        //     };
+        // });
+
+        // let currentBtn;
+        // if (e && e.currentTarget) {
+        //     currentBtn = e.currentTarget;
+        // } else {
+        //     currentBtn = buttons[0]; 
+        // }
+
+
+
+        // if (currentBtn && !(currentBtn.classList.contains("bg-[#15803D]") && currentBtn.classList.contains("text-white"))) {
+        //     currentBtn.classList.add("bg-[#15803D]", "text-white");
+        // };
 
         let plantURL = `https://openapi.programming-hero.com/api/plants`;
         fetch(plantURL)
@@ -37,21 +55,30 @@ function MainFunction() {
 
                 });
             });
-    }
+    };
+
+
 
     window.selectCategory = (id, e) => {
 
+        let cataContainer = document.getElementById("cataContainer");
         let currentBtn = e.currentTarget;
-
-        let buttons = document.querySelectorAll("#cataContainer li");
+        let buttons = cataContainer.querySelectorAll("li");
         buttons.forEach(btn => {
-            btn.style.backgroundColor = "";
-            btn.style.color = "";
+            if (btn.classList.contains("bg-[#15803D]") && btn.classList.contains("text-white")) {
+                btn.classList.remove("bg-[#15803D]", "text-white");
+            };
         });
-        currentBtn.style.backgroundColor = "#15803D";
-        currentBtn.style.color = "#FFFFFF";
+        if (!(currentBtn.classList.contains("bg-[#15803D]") && currentBtn.classList.contains("text-white"))) {
+            currentBtn.classList.add("bg-[#15803D]", "text-white");
+            if(currentBtn.classList.contains("hover:bg-green-200")){
+                currentBtn.classList.remove("hover:bg-green-200");
+            }
+        };
 
 
+
+        // Fetch plants based on selected category
         let plantURL = `https://openapi.programming-hero.com/api/category/${id}`;
         fetch(plantURL)
             .then(res => res.json())
@@ -88,20 +115,31 @@ function MainFunction() {
         .then(data => {
             let categoriesNames = data.categories;
             let cataContainer = document.getElementById("cataContainer");
-            cataContainer.innerHTML = `
-            <li onclick="selectAll(event)" class="cursor-pointer text-[#1F2937] text-[16px] py-[10px] px-[8px] rounded hover:bg-green-200 hover:text-black"> All Trees</li>`;
+
 
             categoriesNames.forEach(cataName => {
                 let CataSerial = cataName.id;
                 cataContainer.innerHTML += `
-            <li onclick="selectCategory(${CataSerial}, event)" class="cursor-pointer text-[#1F2937] text-[16px] py-[10px] px-[8px] rounded hover:bg-green-200 hover:text-black">${cataName.category_name}</li>
+            <li onclick="selectCategory(${CataSerial}, event)" class="cursor-pointer text-[#1F2937] text-[16px] py-[10px] px-[8px] rounded hover:bg-green-200 active:bg-[#15803D] active:text-white">${cataName.category_name}</li>
             `;
 
             });
 
         });
 
+
+
 };
 
+
+
 MainFunction();
-selectAll();
+document.addEventListener("DOMContentLoaded", () => {
+    selectAll(); // DOM ready হলে default প্রথম li তে highlight হবে
+});
+
+
+
+
+
+
