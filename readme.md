@@ -6,7 +6,7 @@ ans:
 - let হলো block scoped এবং একই নাম আবার declare করা যায় না।  
 - const হলো block scoped এবং declare করার পর এর value change করা যায় না।  
 
-# 2. What is the difference between map(), forEach(), and filter()?
+## 2. What is the difference between map(), forEach(), and filter()?
 ans:
 - map() নতুন একটা array return করে যেখানে প্রতিটা element transform হয়।  
 - forEach() শুধু loop চালায় কিন্তু নতুন array return করে না।  
